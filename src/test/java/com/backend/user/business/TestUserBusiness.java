@@ -36,6 +36,13 @@ public class TestUserBusiness {
         Assertions.assertEquals(token, result);
     }
 
+    @Test
+    @Order(3)
+    public void givenNotError_whenDeleteUser() throws BaseException {
+        // Assert
+        Assertions.assertDoesNotThrow(() -> userBusiness.deleteUser(UserLogin.email));
+    }
+
 
     interface UserLogin {
         String userName = "MongoUser01";

@@ -27,4 +27,8 @@ public class UserBusiness {
         userModel.setEmail(user.getEmail());
         return userModel;
     }
+
+    public void deleteUser(String email) {
+        this.userService.deleteUserByEmail(email);
+    }
 }
