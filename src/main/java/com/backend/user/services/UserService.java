@@ -1,6 +1,8 @@
 package com.backend.user.services;
 
 import com.backend.user.entity.UserEntity;
+import com.backend.user.exception.BaseException;
+import com.backend.user.exception.UserException;
 import com.backend.user.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserEntity createUser(UserEntity user) {
+    public UserEntity createUser(String email, String password, String userName) throws BaseException {
+        Optional<UserEntity> opt = this.userRepository.findByEmail(email);
+        if (opt.isPresent()) {
+            throw UserException.emailExisting();
+        }
+        UserEntity user = new UserEntity();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setUserName(userName);
         return this.userRepository.save(user);
     }
 
@@ -24,10 +34,22 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public UserEntity getUserById(String id) throws Exception {
+    public UserEntity getUserById(String id) throws BaseException {
         Optional<UserEntity> opt = this.userRepository.findById(id);
         if (!opt.isPresent()) {
-            throw new Exception();
+            throw UserException.userNotFound();
+        }
+        return opt.get();
+    }
+
+    public void deleteUserByEmail(String email) {
+        this.userRepository.deleteByEmail(email);
+    }
+
+    public UserEntity getUserByEmail(String email) throws BaseException {
+        Optional<UserEntity> opt = this.userRepository.findByEmail(email);
+        if (!opt.isPresent()) {
+            throw UserException.userNotFound();
         }
         return opt.get();
     }

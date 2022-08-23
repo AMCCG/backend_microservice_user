@@ -1,4 +1,4 @@
-package com.backend.user.controller;
+package com.backend.user.api;
 
 
 import com.backend.user.entity.UserEntity;

@@ -1,6 +1,8 @@
 package com.backend.user.service;
 
 import com.backend.user.entity.UserEntity;
+import com.backend.user.exception.BaseException;
+import com.backend.user.exception.UserException;
 import com.backend.user.services.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +19,53 @@ public class TestUserService {
 
     @Test
     @Order(1)
-    public void createUser() {
-        UserEntity user = new UserEntity();
-        user.setId(UserCreateOne.id);
-        user.setName(UserCreateOne.name);
-        UserEntity result = userService.createUser(user);
+    public void createUser() throws BaseException {
+        UserEntity result = userService.createUser(UserCreateOne.email, UserCreateOne.password, UserCreateOne.userName);
+
         // Assert
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(UserCreateOne.id, result.getId());
-        Assertions.assertEquals(UserCreateOne.name, result.getName());
+        Assertions.assertEquals(UserCreateOne.userName, result.getUserName());
+        Assertions.assertEquals(UserCreateOne.email, result.getEmail());
+        Assertions.assertEquals(UserCreateOne.password, result.getPassword());
     }
 
     @Test
     @Order(2)
-    public void getUserById() throws Exception {
-        UserEntity result = userService.getUserById(UserCreateOne.id);
+    public void givenUserException_whenCreateUserWithEmailExisting() throws BaseException {
+        // Assert
+        Assertions.assertThrows(UserException.class, () -> userService.createUser(UserCreateOne.email, UserCreateOne.password, UserCreateOne.userName));
+    }
+
+    @Test
+    @Order(3)
+    public void givenUserException_whenGetUserById() {
+        String id = "123456789";
+        // Assert
+        Assertions.assertThrows(UserException.class, () -> userService.getUserById(id));
+    }
+
+    @Test
+    @Order(4)
+    public void givenUser_whenGetUserByEmail() throws BaseException {
+        UserEntity result = userService.getUserByEmail(UserCreateOne.email);
         // Assert
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(UserCreateOne.id, result.getId());
-        Assertions.assertEquals(UserCreateOne.name, result.getName());
+        Assertions.assertEquals(UserCreateOne.userName, result.getUserName());
+        Assertions.assertEquals(UserCreateOne.email, result.getEmail());
+        Assertions.assertEquals(UserCreateOne.password, result.getPassword());
+    }
+
+
+    @Test
+    @Order(5)
+    public void whenDeleteUserByEmail() {
+        Assertions.assertDoesNotThrow(() -> userService.deleteUserByEmail(UserCreateOne.email));
     }
 
     interface UserCreateOne {
         String id = UUID.randomUUID().toString();
-        String name = "MongoUser01";
+        String userName = "MongoUser01";
+        String email = "mongo_user1@microservice.com";
+        String password = "123456";
     }
 }
