@@ -1,4 +1,4 @@
-package com.backend.user;
+package com.microservice.backend.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

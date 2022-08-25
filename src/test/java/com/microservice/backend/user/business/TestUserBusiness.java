@@ -1,7 +1,7 @@
-package com.backend.user.business;
+package com.microservice.backend.user.business;
 
-import com.backend.user.exception.BaseException;
-import com.backend.user.model.UserModel;
+import com.microservice.backend.user.exception.BaseException;
+import com.microservice.backend.user.model.UserModel;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

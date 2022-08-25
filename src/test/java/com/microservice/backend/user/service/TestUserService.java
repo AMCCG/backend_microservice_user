@@ -1,9 +1,9 @@
-package com.backend.user.service;
+package com.microservice.backend.user.service;
 
-import com.backend.user.entity.UserEntity;
-import com.backend.user.exception.BaseException;
-import com.backend.user.exception.UserException;
-import com.backend.user.services.UserService;
+import com.microservice.backend.user.entity.UserEntity;
+import com.microservice.backend.user.exception.BaseException;
+import com.microservice.backend.user.exception.UserException;
+import com.microservice.backend.user.services.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

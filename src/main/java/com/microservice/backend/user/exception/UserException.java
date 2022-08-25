@@ -1,4 +1,4 @@
-package com.backend.user.exception;
+package com.microservice.backend.user.exception;
 
 public class UserException extends BaseException {
 

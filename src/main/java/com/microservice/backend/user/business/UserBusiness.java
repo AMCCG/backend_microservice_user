@@ -1,9 +1,9 @@
-package com.backend.user.business;
+package com.microservice.backend.user.business;
 
-import com.backend.user.entity.UserEntity;
-import com.backend.user.exception.BaseException;
-import com.backend.user.model.UserModel;
-import com.backend.user.services.UserService;
+import com.microservice.backend.user.entity.UserEntity;
+import com.microservice.backend.user.exception.BaseException;
+import com.microservice.backend.user.model.UserModel;
+import com.microservice.backend.user.services.UserService;
 import org.springframework.stereotype.Service;
 
 @Service

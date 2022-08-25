@@ -1,4 +1,4 @@
-package com.backend.user.entity;
+package com.microservice.backend.user.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

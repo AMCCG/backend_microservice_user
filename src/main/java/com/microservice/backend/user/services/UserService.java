@@ -1,9 +1,9 @@
-package com.backend.user.services;
+package com.microservice.backend.user.services;
 
-import com.backend.user.entity.UserEntity;
-import com.backend.user.exception.BaseException;
-import com.backend.user.exception.UserException;
-import com.backend.user.repositories.UserRepository;
+import com.microservice.backend.user.entity.UserEntity;
+import com.microservice.backend.user.exception.BaseException;
+import com.microservice.backend.user.exception.UserException;
+import com.microservice.backend.user.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

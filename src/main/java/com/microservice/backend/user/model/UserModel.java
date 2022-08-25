@@ -1,4 +1,4 @@
-package com.backend.user.model;
+package com.microservice.backend.user.model;
 
 import lombok.Data;
 

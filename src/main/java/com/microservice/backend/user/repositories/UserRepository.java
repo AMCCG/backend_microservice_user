@@ -1,6 +1,6 @@
-package com.backend.user.repositories;
+package com.microservice.backend.user.repositories;
 
-import com.backend.user.entity.UserEntity;
+import com.microservice.backend.user.entity.UserEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
