@@ -1,9 +1,11 @@
 package com.microservice.backend.user.api;
 
-import com.microservice.backend.user.business.UserBusiness;
-import com.microservice.backend.user.entity.UserEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microservice.backend.user.business.UserBusiness;
+import com.microservice.backend.user.model.UserRequest;
+import com.microservice.backend.user.model.UserResponse;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserApi.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -31,8 +32,27 @@ public class TestUserApi {
 
 
     @Test
+    @Order(1)
+    public void shouldReturnNewUserWhenRegister() throws Exception {
+        UserRequest user = new UserRequest();
+        user.setEmail(UserLogin.email);
+        user.setPassword(UserLogin.password);
+        user.setUserName(UserLogin.userName);
+        ObjectMapper mapper = new ObjectMapper();
+        String requestJson = mapper.writeValueAsString(user);
+
+        UserResponse userResponse = new UserResponse();
+        userResponse.setEmail(UserLogin.email);
+        userResponse.setUserName(UserLogin.userName);
+        when(userBusiness.register(UserLogin.email, UserLogin.password, UserLogin.userName)).thenReturn(userResponse);
+
+        this.mockMvc.perform(post("/register").contentType(APPLICATION_JSON).content(requestJson)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.email").value(UserLogin.email));
+    }
+
+    @Test
+    @Order(2)
     public void shouldReturnTokenWhenLoginPass() throws Exception {
-        UserEntity user = new UserEntity();
+        UserRequest user = new UserRequest();
         user.setEmail(UserLogin.email);
         user.setPassword(UserLogin.password);
         ObjectMapper mapper = new ObjectMapper();

@@ -1,7 +1,7 @@
 package com.microservice.backend.user.business;
 
 import com.microservice.backend.user.exception.BaseException;
-import com.microservice.backend.user.model.UserModel;
+import com.microservice.backend.user.model.UserResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +19,7 @@ public class TestUserBusiness {
         // Given
         String token = UserLogin.email;
         // When
-        UserModel result = userBusiness.register(UserLogin.email, UserLogin.password, UserLogin.userName);
+        UserResponse result = userBusiness.register(UserLogin.email, UserLogin.password, UserLogin.userName);
         // Assert
         Assertions.assertEquals(UserLogin.email, result.getEmail());
         Assertions.assertEquals(UserLogin.userName, result.getUserName());
