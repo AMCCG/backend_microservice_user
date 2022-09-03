@@ -29,11 +29,13 @@ public class TestUserBusiness {
     @Order(2)
     public void givenToken_whenLoginPass() throws BaseException {
         // Given
-        String token = UserLogin.email;
+        String userName = UserLogin.userName;
+        String email = UserLogin.email;
         // When
-        String result = userBusiness.login(UserLogin.email, UserLogin.password);
+        UserResponse result = userBusiness.login(UserLogin.email, UserLogin.password);
         // Assert
-        Assertions.assertEquals(token, result);
+        Assertions.assertEquals(userName, result.getUserName());
+        Assertions.assertEquals(email, result.getEmail());
     }
 
     @Test

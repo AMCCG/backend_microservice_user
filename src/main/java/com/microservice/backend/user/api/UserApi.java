@@ -23,12 +23,9 @@ public class UserApi {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> login(@RequestBody UserRequest userRequest) throws BaseException {
-        log.info(userRequest.getEmail());
-        log.info(userRequest.getPassword());
-        String token = this.userBusiness.login(userRequest.getEmail(), userRequest.getPassword());
-        log.info(token);
-        return new ResponseEntity(token, HttpStatus.OK);
+    public ResponseEntity<UserResponse> login(@RequestBody UserRequest userRequest) throws BaseException {
+        UserResponse user = this.userBusiness.login(userRequest.getEmail(), userRequest.getPassword());
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PostMapping(value = "/register")

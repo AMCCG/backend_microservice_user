@@ -13,12 +13,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserApi.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -57,9 +57,12 @@ public class TestUserApi {
         user.setPassword(UserLogin.password);
         ObjectMapper mapper = new ObjectMapper();
         String requestJson = mapper.writeValueAsString(user);
+        UserResponse userResponse = new UserResponse();
+        userResponse.setEmail(UserLogin.email);
+        userResponse.setUserName(UserLogin.userName);
 
-        when(userBusiness.login(UserLogin.email, UserLogin.password)).thenReturn(UserLogin.email);
-        this.mockMvc.perform(post("/login").contentType(APPLICATION_JSON).content(requestJson)).andDo(print()).andExpect(status().isOk()).andExpect(content().string(containsString(UserLogin.email)));
+        when(userBusiness.login(UserLogin.email, UserLogin.password)).thenReturn(userResponse);
+        this.mockMvc.perform(post("/login").contentType(APPLICATION_JSON).content(requestJson)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.email").value(UserLogin.email));
     }
 
     interface UserLogin {

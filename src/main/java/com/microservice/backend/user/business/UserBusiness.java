@@ -19,9 +19,9 @@ public class UserBusiness {
         this.userMapper = userMapper;
     }
 
-    public String login(String email, String password) throws BaseException {
+    public UserResponse login(String email, String password) throws BaseException {
         UserEntity user = userService.getUserByEmail(email);
-        return user.getEmail();
+        return this.userMapper.toRegisterResponse(user);
     }
 
     public UserResponse register(String email, String password, String userName) throws BaseException {
