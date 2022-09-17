@@ -46,7 +46,7 @@ public class TestUserApi {
         userResponse.setUserName(UserLogin.userName);
         when(userBusiness.register(UserLogin.email, UserLogin.password, UserLogin.userName)).thenReturn(userResponse);
 
-        this.mockMvc.perform(post("/register").contentType(APPLICATION_JSON).content(requestJson)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.email").value(UserLogin.email));
+        this.mockMvc.perform(post("/backend/user/register").contentType(APPLICATION_JSON).content(requestJson)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.email").value(UserLogin.email));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class TestUserApi {
         userResponse.setUserName(UserLogin.userName);
 
         when(userBusiness.login(UserLogin.email, UserLogin.password)).thenReturn(userResponse);
-        this.mockMvc.perform(post("/login").contentType(APPLICATION_JSON).content(requestJson)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.email").value(UserLogin.email));
+        this.mockMvc.perform(post("/backend/user/login").contentType(APPLICATION_JSON).content(requestJson)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.email").value(UserLogin.email));
     }
 
     interface UserLogin {
